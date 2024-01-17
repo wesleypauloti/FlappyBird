@@ -1,0 +1,148 @@
+Manager:
+    Intro:
+        name: 'intro'
+    Menu:
+        name: 'menu'
+    Game:
+        name: 'game'
+    GameOver:
+        name: 'gameOver'
+
+<MenuButton@MDFlatButton>:    
+    theme_text_color: "Custom"
+    text_color: (1, 1, 1, 1)
+    font_size: '20sp'
+    elevation_normal: 10
+    elevation_normal_color: (0, 0, 0, 0)
+    elevation_press: 5
+    elevation_press_color: (0, 0, 0, 0)
+    ripple_behavior: True
+    border_radius: [50,]
+    
+    # Cor de fundo normal (azul escuro)
+    canvas.before:
+        Color:
+            rgba: 0.2745, 0.5098, 0.7059, 1  # Cor de fundo azul escuro
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+
+<Intro>:
+    MDFloatLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        MDLabel:
+            text: "Wesley\nPaulo"
+            halign: 'center'
+            pos_hint: {'center_y': 0.6}
+            color: 1, 1, 1, 1
+            font_size: 60
+
+        MDLabel:
+            text: "Productions"
+            halign: 'center'
+            pos_hint: {'center_y': 0.4}
+            color: 1, 1, 1, 1
+            font_size: 30
+
+<Menu>:
+    MDFloatLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'gameBackground.png'
+        Widget:
+
+        MDLabel:
+            text: "FLAPP BIRD"
+            halign: 'center'
+            pos_hint: {'center_y': 0.7}
+            color: 0.2745, 0.5098, 0.7059
+            font_size: 60
+
+        MenuButton:
+            text: "Start"
+            pos_hint: {'center_x': 0.3, 'center_y': 0.4}
+            on_release: app.root.current = 'game'                
+            size_hint: .1,.05
+
+        MenuButton:
+            text: 'Exit'
+            pos_hint: {'center_x': 0.7, 'center_y': 0.4}
+            on_release: app.stop()
+            size_hint: .1,.05
+<Player>:
+    source: 'player.png'
+
+<Game>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'gameBackground.png'
+    FloatLayout:
+        Label:
+            text: 'Score: ' + str(root.score)
+            font_size: '70sp'
+            bold: True
+            size_hint_y: None
+            height: self.font_size
+            y: root.height * 0.95 - self.height
+        Player:
+            id: player
+            allow_stretch: True
+            size_hint: None, None
+            size: root.height/15, root.height/15
+            x: root.width/20
+            y: root.height/2
+
+<GameOver>:
+    MDFloatLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'gameOver.png'
+        Widget:
+
+        MDLabel:
+            pos_hint: {'center_x': 0.7, 'center_y': 0.7}
+            color: 0.2745, 0.5098, 0.7059
+            font_size: 60
+
+        MenuButton:
+            text: "Try Again"
+            pos_hint: {'center_x': 0.3, 'center_y': 0.4}
+            on_release: app.root.current = 'game'                
+            size_hint: .1,.05
+
+        MenuButton:
+            text: 'Exit'
+            pos_hint: {'center_x': 0.7, 'center_y': 0.4}
+            on_release: app.stop()
+            size_hint: .1,.05
+
+<Obstacle>:
+    canvas:
+        Color:
+            rgba: self.color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    size_hint: None,None
+    width: '100dp'
